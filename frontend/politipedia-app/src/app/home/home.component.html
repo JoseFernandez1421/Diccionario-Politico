@@ -1,0 +1,28 @@
+<!--p>home works!</p-->
+
+<!--input id="" [(ngModel)]="politico.nombre"/-->
+
+<!--button id="" (click)="getPoliticos()">Politicos</button-->
+
+
+<div *ngIf="hasRoute('home')" >
+    <p>Esta pagina esta hecha para ayudar a elegir bien.</p>
+    
+    
+    <!--input id="" [(ngModel)]="politico.nombre"/-->
+
+    <mat-form-field class="example-form-field" appearance="fill">
+        <mat-label>Ingrese el nombre de su politico</mat-label>
+        <input matInput type="text" [(ngModel)]="politico.nombre"/>
+        <button *ngIf="politico.nombre" matSuffix mat-icon-button aria-label="Clear" (click)="politico.nombre=''">
+          <mat-icon>x</mat-icon>
+        </button>
+      </mat-form-field>
+
+    
+    <div class="example-button-row">
+        <button mat-raised-button color="primary" id="" (click)="goPoliticosLista()">Buscar</button>
+
+    </div>
+    
+</div>
