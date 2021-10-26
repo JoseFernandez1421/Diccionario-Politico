@@ -16,4 +16,5 @@ Inspirado en el libro de recortes periodistico del personaje clásico,  esta apl
 2. Levantar frontend: ng serve -o
 3. Ingresar desde el explorardor a  http://localhost:4200
 
+
 -José Martín Fernández Cubas(@JoseFernandez1421- jose.fernandez@utec.edu.pe)
