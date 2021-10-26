@@ -5,7 +5,7 @@ Inspirado en el libro de recortes periodistico del personaje clásico,  esta apl
 ## Requisitos: 
 
 1. NodeJS : Entorno que permite la ejecución de JavaScript.
-2.NPM : Node Package Manager. Es un gestor de paquetes y viene incluído en versiones modernas de NodeJS.
+2. NPM : Node Package Manager. Es un gestor de paquetes y viene incluído en versiones modernas de NodeJS.
 3. Typescript: Paquete de lenguaje Typescript.
 4. AngularCli: Paquete para crear proyectos Angular.
 5. Visual Studio Code (Editor de código donde codificaremos la aplicación)
