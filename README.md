@@ -4,12 +4,16 @@ Inspirado en el libro de recortes periodistico del personaje clásico,  esta apl
 
 ## Requisitos: 
 
-1. NodeJS : Entorno que permite la ejecución de JavaScript.
-2. NPM : Node Package Manager. Es un gestor de paquetes y viene incluído en versiones modernas de NodeJS.
-3. Typescript: Paquete de lenguaje Typescript.
-4. AngularCli: Paquete para crear proyectos Angular.
-5. Visual Studio Code (Editor de código donde codificaremos la aplicación)
+* NodeJS : Entorno que permite la ejecución de JavaScript.
+* NPM : Node Package Manager. Es un gestor de paquetes y viene incluído en versiones modernas de NodeJS.
+* Typescript: Paquete de lenguaje Typescript.
+* AngularCli: Paquete para crear proyectos Angular.
+* Visual Studio Code (Editor de código donde codificaremos la aplicación)
 
 
+### Como correr la aplicación: 
+1. Levantar backend: node app/server.js
+2. Levantar frontend: ng serve -o
+3. Ingresar desde el explorardor a  http://localhost:4200
 
 -José Martín Fernández Cubas(@JoseFernandez1421- jose.fernandez@utec.edu.pe)
