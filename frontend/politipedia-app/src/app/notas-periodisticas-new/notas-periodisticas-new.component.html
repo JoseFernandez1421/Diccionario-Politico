@@ -1,0 +1,32 @@
+
+<div class='center'>
+    <p>Ingrese datos de la nota de prensa</p>
+    
+    
+    <!--input id="" [(ngModel)]="politico.nombre"/-->
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Ingrese el Link</mat-label>
+        <input matInput type="text" [(ngModel)]="notaPeriodistica.link"/>
+        <button *ngIf="notaPeriodistica.link" matSuffix mat-icon-button aria-label="Clear" (click)="notaPeriodistica.link=''">
+          <mat-icon>x</mat-icon>
+        </button>
+    </mat-form-field>
+    <p></p>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Ingrese el resumen</mat-label>
+        <input matInput type="text" [(ngModel)]="notaPeriodistica.resumen"/>
+        <button *ngIf="notaPeriodistica.resumen" matSuffix mat-icon-button aria-label="Clear" (click)="notaPeriodistica.resumen=''">
+          <mat-icon>x</mat-icon>
+        </button>
+    </mat-form-field>
+
+
+    
+    <div class="example-button-row">
+        <button mat-raised-button color="primary" id="" (click)="goGuardar()">Guardar</button>
+
+    </div>
+    
+</div>
