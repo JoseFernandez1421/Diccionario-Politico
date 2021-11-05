@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
     password : '1234',
-    database : 'politipediabd'
+    database : 'politipediadb'
 });
 
 // conectarse a mysql
@@ -46,12 +46,127 @@ connection.end(function(){
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
     next();
   });
 
 
+
 //API 1
-app.post('/api/politicos', (req, res) => {
+app.get('/api/politicos/:nombre', (req, res) => {
+
+
+    let nombre = req.params.nombre;
+
+    console.log(nombre)
+
+    let sql = `select dni, nombre from politicos where nombre like '%${nombre}%' `
+    console.log(sql)
+
+    let query = connection.query(sql, (err,results)=>{
+
+        if(err){
+            throw err
+        }
+        console.log(results)
+        
+        res.json({results})
+    })
+    
+
+})
+
+//API 2
+app.get('/api/politico/:dni', (req, res) => {
+
+    let dni = req.params.dni;
+
+    console.log(dni)
+    
+    let sql = `select dni, nombre, lugar_nacimiento, lugar_domicilio, fecha_nacimiento, biografia from politicos where dni = '${dni}' `
+    console.log(sql)
+
+    let query = connection.query(sql, (err,results)=>{
+
+        if(err){
+            throw err
+        }
+        
+        //console.log(results[0])
+        //let base64data = Buffer.from(results[0].foto.data).toString('base64')
+        //console.log(base64data)
+        res.json({ results })
+    })
+})
+
+
+//API 3
+app.get('/api/notas_periodisticas/:dni', (req, res) => {
+
+    let dni = req.params.dni;
+
+    console.log(dni)
+    
+    let sql = `select a.codigo_nota, a.dni, b.resumen, b.link from politicos_notas_periodisticas a, notas_periodisticas b where a.codigo_nota = b.codigo_nota and a.dni = '${dni}' `
+    console.log(sql)
+
+    let query = connection.query(sql, (err,results)=>{
+
+        if(err){
+            throw err
+        }
+        res.json({ results })
+    })
+})
+
+//API 4
+app.get('/api/cargos_publicos/:dni', (req, res) => {
+
+    let dni = req.params.dni;
+
+    console.log(dni)
+    
+    let sql = `select a.dni, c.nombre institucion, b.nombre cargo, a.fecha_inicio, a.fecha_fin, a.razon_cese `
+    sql += `from politicos_cargos_ocupados a, instituciones b, cargos_publicos c `
+    sql += `where a.codigo_institucion = b.codigo_institucion and a.codigo_cargo_ocupado = c.codigo_cargo_ocupado and a.dni = '${dni}' `
+    console.log(sql)
+
+    let query = connection.query(sql, (err,results)=>{
+
+        if(err){
+            throw err
+        }
+
+        res.json({ results })
+    })
+})
+
+
+
+//API 5
+app.get('/api/militancias/:dni', (req, res) => {
+
+    let dni = req.params.dni;
+
+    console.log(dni)
+    
+    let sql = `select a.dni, b.nombre partido, c.nombre cargo, a.fecha_inicio, a.fecha_fin from militantes a, `
+    sql += `partidos_politicos b, partido_cargos c `
+    sql += `where a.codigo_partido = b.codigo_partido and a.codigo_cargo = c.codigo_cargo and a.dni = '${dni}' `
+    console.log(sql)
+
+    let query = connection.query(sql, (err,results)=>{
+
+        if(err){
+            throw err
+        }
+        res.json({ results })
+    })
+})
+
+
+//API 6
+app.post('/api/notas_periodisticas/new', function(req, res) {
     
     let body = ''
     req.on('data', chunk => {
@@ -59,9 +174,13 @@ app.post('/api/politicos', (req, res) => {
     })
     req.on('end', ()=> {
         let obj = JSON.parse(body)
-        console.log(obj.nombre)
+        console.log(obj.dni)
 
-        let sql = `select dni, nombre from politicos where nombre like '%${obj.nombre}%' `
+
+        let sql = `insert into notas_periodisticas (link,resumen,recorte) values ( `
+        sql += `'${obj.link}', `
+        sql += `'${obj.resumen}', `
+        sql += `'${obj.recorte}' )`
         console.log(sql)
 
         let query = connection.query(sql, (err,results)=>{
@@ -70,120 +189,51 @@ app.post('/api/politicos', (req, res) => {
                 throw err
             }
             console.log(results)
+
+
+            let sql = `insert into politicos_notas_periodisticas (codigo_nota,dni) values ( `
+            sql += `'${results.insertId}', `
+            sql += `'${obj.dni}' )`
+            console.log(sql)
+
+
+            let query = connection.query(sql, (err,results)=>{
+
+                if(err){
+                    throw err
+                }
+                console.log(results)
+
             
-            res.json({results})
+                res.json({results})
+            })
         })
     })
 })
 
-//API 2
-app.post('/api/politico', (req, res) => {
+
+
+//API 7
+app.delete('/api/notas_periodisticas/delete/:codigo_nota/:dni', function(req, res) {
+
+    let codigo_nota = req.params.codigo_nota;
+    let dni = req.params.dni;
+
+    console.log(dni)
     
-    let body = ''
-    req.on('data', chunk => {
-       body += chunk.toString() 
+    let sql = `delete from politicos_notas_periodisticas where dni='${dni}' and codigo_nota=${codigo_nota} `
+
+    console.log(sql)
+
+    let query = connection.query(sql, (err,results)=>{
+
+        if(err){
+            throw err
+        }
+        res.json({ results })
     })
-    req.on('end', ()=> {
-        let obj = JSON.parse(body)
-        console.log(obj.dni)
 
-        let sql = `select dni, nombre, lugar_nacimiento, lugar_domicilio, fecha_nacimiento, biografia from politicos where dni = '${obj.dni}' `
-        console.log(sql)
-
-        let query = connection.query(sql, (err,results)=>{
-
-            if(err){
-                throw err
-            }
-            
-            //console.log(results[0])
-            //let base64data = Buffer.from(results[0].foto.data).toString('base64')
-            //console.log(base64data)
-            res.json({ results })
-        })
-    })
 })
-
-
-//API 3
-app.post('/api/notas_periodisticas', (req, res) => {
-    
-    let body = ''
-    req.on('data', chunk => {
-       body += chunk.toString() 
-    })
-    req.on('end', ()=> {
-        let obj = JSON.parse(body)
-        console.log(obj.dni)
-
-        let sql = `select a.dni, b.resumen, b.link from politicos_notas_periodisticas a, notas_periodisticas b where a.codigo_nota = b.codigo_nota and a.dni = '${obj.dni}' `
-        console.log(sql)
-
-        let query = connection.query(sql, (err,results)=>{
-
-            if(err){
-                throw err
-            }
-            res.json({ results })
-        })
-    })
-})
-
-//API 4
-app.post('/api/cargos_publicos', (req, res) => {
-    
-    let body = ''
-    req.on('data', chunk => {
-       body += chunk.toString() 
-    })
-    req.on('end', ()=> {
-        let obj = JSON.parse(body)
-        console.log(obj.dni)
-
-        let sql = `select a.dni, c.nombre institucion, b.nombre cargo, a.fecha_inicio, a.fecha_fin, a.razon_cese `
-        sql += `from politicos_cargos_ocupados a, instituciones b, cargos_publicos c `
-        sql += `where a.codigo_institucion = b.codigo_institucion and a.codigo_cargo_ocupado = c.codigo_cargo_ocupado and a.dni = '${obj.dni}' `
-        console.log(sql)
-
-        let query = connection.query(sql, (err,results)=>{
-
-            if(err){
-                throw err
-            }
-
-            res.json({ results })
-        })
-    })
-})
-
-
-
-//API 5
-app.post('/api/militancias', (req, res) => {
-    
-    let body = ''
-    req.on('data', chunk => {
-       body += chunk.toString() 
-    })
-    req.on('end', ()=> {
-        let obj = JSON.parse(body)
-        console.log(obj.dni)
-
-        let sql = `select a.dni, b.nombre partido, c.nombre cargo, a.fecha_inicio, a.fecha_fin from militantes a, `
-        sql += `partidos_politicos b, partido_cargos c `
-        sql += `where a.codigo_partido = b.codigo_partido and a.codigo_cargo = c.codigo_cargo and a.dni = '${obj.dni}' `
-        console.log(sql)
-
-        let query = connection.query(sql, (err,results)=>{
-
-            if(err){
-                throw err
-            }
-            res.json({ results })
-        })
-    })
-})
-
 
 // iniciamos nuestro servidor
 app.listen(port)
