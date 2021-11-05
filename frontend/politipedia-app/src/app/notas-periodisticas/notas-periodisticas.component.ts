@@ -19,7 +19,7 @@ export class NotasPeriodisticasComponent implements OnInit {
   notasPeriodisticas: NotaPeriodistica[] = [];
 
 
-  displayedColumns: string[] = ['dni', 'resumen','link'];
+  displayedColumns: string[] = ['dni', 'resumen','link','acciones'];
 
   dataSource = new MatTableDataSource<NotaPeriodistica>();
   
@@ -41,7 +41,7 @@ export class NotasPeriodisticasComponent implements OnInit {
   
   getNotasPeriodisticas(){
 
-    this.srv.getNotasPeriodisticas(this.politico).subscribe(res=>{
+    this.srv.getNotasPeriodisticas(this.dni).subscribe(res=>{
      //console.log(res);
      this.notasPeriodisticas = res.results as NotaPeriodistica[];
      //console.log('politics: '+JSON.stringify(this.politics));
@@ -51,5 +51,23 @@ export class NotasPeriodisticasComponent implements OnInit {
    });
  }
 
+
+ borrarNotaPeriodistica(notaPer: NotaPeriodistica){
+
+
+  this.srv.deleteNotasPeriodisticas(notaPer.codigo_nota, notaPer.dni);
+
+  const index = this.dataSource.data.indexOf(notaPer);
+
+
+  this.dataSource.data.splice(index, 1);
+
+  this.dataSource._updateChangeSubscription();
+}
+
+
+goNew(){
+  this.router.navigate(['/notas-periodisticas-new',this.dni]);
+}
 
 }

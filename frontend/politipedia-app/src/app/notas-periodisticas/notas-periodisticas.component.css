@@ -31,3 +31,9 @@ mat-header-cell:nth-child(5) {
     width: 100%;
   }
   
+
+  .example-button-container {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+  }
