@@ -6,33 +6,12 @@
 	},
 	"item": [
 		{
-			"name": "hola",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": null
-			},
-			"response": []
-		},
-		{
 			"name": "1. politicos",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nombre\": \"t\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8080/api/politicos",
+					"raw": "http://localhost:8080/api/politicos/t",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -40,7 +19,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"politicos"
+						"politicos",
+						"t"
 					]
 				}
 			},
@@ -49,19 +29,10 @@
 		{
 			"name": "2. politico",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"dni\": \"10001088\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8080/api/politico",
+					"raw": "http://localhost:8080/api/politico/10001088",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -69,7 +40,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"politico"
+						"politico",
+						"10001088"
 					]
 				}
 			},
@@ -77,8 +49,11 @@
 		},
 		{
 			"name": "3. notas_periodisticas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -90,7 +65,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/notas_periodisticas",
+					"raw": "http://localhost:8080/api/notas_periodisticas/10001088",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -98,7 +73,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"notas_periodisticas"
+						"notas_periodisticas",
+						"10001088"
 					]
 				}
 			},
@@ -106,12 +82,15 @@
 		},
 		{
 			"name": "4. cargos_publicos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"dni\": \"10001088\"\r\n}",
+					"raw": "{\r\n    \"dni\": \"44123390\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -119,7 +98,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/cargos_publicos",
+					"raw": "http://localhost:8080/api/cargos_publicos/10001088",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -127,7 +106,8 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"cargos_publicos"
+						"cargos_publicos",
+						"10001088"
 					]
 				}
 			},
@@ -135,8 +115,11 @@
 		},
 		{
 			"name": "5. militancias",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -148,7 +131,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/militancias",
+					"raw": "http://localhost:8080/api/militancias/10001088",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -156,7 +139,61 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"militancias"
+						"militancias",
+						"10001088"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Nueva_nota_periodistica",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"link\": \"http://www.abc.com/gre\",\r\n    \"resumen\": \"Nota de prensa de PJ\",\r\n    \"recorte\": \"null\",\r\n    \"dni\": \"10001088\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/notas_periodisticas/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"notas_periodisticas",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Eliminar_nota_periodistica",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/notas_periodisticas/delete/22/10001088",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"notas_periodisticas",
+						"delete",
+						"22",
+						"10001088"
 					]
 				}
 			},
