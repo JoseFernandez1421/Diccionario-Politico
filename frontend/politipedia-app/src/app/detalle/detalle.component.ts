@@ -43,7 +43,7 @@ export class DetalleComponent implements OnInit {
 
     getDetalle(){
 
-    this.srv.getDetalle(this.detalle).subscribe(res=>{
+    this.srv.getDetalle(this.dni).subscribe(res=>{
      //console.log(res);
      this.detalles = res.results as Detalle[];
 
