@@ -43,7 +43,7 @@ export class CargosPublicosComponent implements OnInit {
   
   getCargosPublicos(){
 
-    this.srv.getCargosPublicos(this.politico).subscribe(res=>{
+    this.srv.getCargosPublicos(this.dni).subscribe(res=>{
      console.log(res);
      this.cargosPublicos = res.results as CargoPublico[];
      //console.log('politics: '+JSON.stringify(this.politics));
